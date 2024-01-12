@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import { TProduct } from "./types";
 import Modal from "./components/ui/Modal";
 import Button from "./components/ui/Button";
-import Input from "./components/ui/Input";
 import { fromProductList } from "./data";
+import Form from "./components/ui/Form";
 
 function App() {
   const [products, setProducts] = useState<TProduct[]>([]);
@@ -27,6 +27,7 @@ function App() {
       console.error(error);
     }
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -34,20 +35,31 @@ function App() {
   const renderProducts = loading ? (
     <h2>Loading...</h2>
   ) : (
-    <div className="cards  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
+    products.map((product) => (
+      <ProductCard key={product.id} product={product} />
+    ))
   );
 
   const renderModal = (
-    <Modal
-      title="Create Product"
-      setIsOpen={setIsOpen}
-      isOpen={isOpen}
-      submitButtons={
-        <>
+    <Modal title="Create Product" setIsOpen={setIsOpen} isOpen={isOpen}>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("test Form");
+        }}
+      >
+        {fromProductList.map((input) => (
+          <Form.Group key={input.id}>
+            <Form.Label id={input.id}>{input.label}</Form.Label>
+            <Form.Input
+              type={input.type}
+              name={input.name}
+              id={input.id}
+              title={input.label}
+            />
+          </Form.Group>
+        ))}
+        <div className="mt-4 flex gap-4">
           <Button
             type="button"
             bg="bg-red-700"
@@ -59,7 +71,7 @@ function App() {
             Cancel
           </Button>
           <Button
-            type="button"
+            type="submit"
             bg="bg-indigo-700"
             outline="outline-indigo-400"
             size="md"
@@ -68,48 +80,37 @@ function App() {
           >
             Submit
           </Button>
-        </>
-      }
-    >
-      <form>
-        {fromProductList.map((input) => (
-          <Input
-            type={input.type}
-            name={input.name}
-            id={input.id}
-            title={input.label}
-          />
-        ))}
-      </form>
+        </div>
+      </Form>
     </Modal>
   );
 
   return (
-    <section>
-      <div className="container">
-        <header>
-          <Navbar name="login" path="/login" />
-        </header>
-        <main>
-          <div className="flex justify-between items-center my-4">
-            <h2 className="text-2xl font-bold">
-              Product <span className="text-indigo-700 ">List</span>
-            </h2>
-            <Button
-              bg="bg-indigo-700"
-              outline="outline-indigo-700"
-              className="max-w-40 hover:bg-indigo-900 hover:outline-indigo-900"
-              size="md"
-              onClick={() => setIsOpen(true)}
-            >
-              Create Product
-            </Button>
-          </div>
-          {renderProducts}
-          {renderModal}
-        </main>
+    <main className="container">
+      {/* <header> */}
+      {/* <Navbar name="login" path="/login" /> build using sass */}
+      {/* </header> */}
+      {/* <main> */}
+      <div className="flex justify-between items-center my-4">
+        <h2 className="text-4xl font-bold">
+          Product <span className="text-indigo-700 ">List</span>
+        </h2>
+        <Button
+          bg="bg-indigo-700"
+          outline="outline-indigo-700"
+          className="max-w-40 hover:bg-indigo-900 hover:outline-indigo-900"
+          size="md"
+          onClick={() => setIsOpen(true)}
+        >
+          Create Product
+        </Button>
       </div>
-    </section>
+      <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
+        {renderProducts}
+      </div>
+      {renderModal}
+      {/* </main> */}
+    </main>
   );
 }
 

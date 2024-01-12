@@ -1,45 +1,42 @@
 import { TProduct } from "../../types";
-import { sliceText } from "../../utils";
+import { numberWithCommas, sliceText } from "../../utils";
+import CircleColor from "../CircleColor";
 import Image from "../Image";
 import Button from "../ui/Button";
 type TProps = {
   product: TProduct;
 };
+
 export default function ProductCard({ product }: TProps) {
   const { title, description, thumbnail, price, colors, category } = product;
+  const renderProductColors = colors.map((color) => (
+    <CircleColor key={color} color={color} />
+  ));
 
   return (
-    <div className="mx-auto md:mx-0 border border-slate-200 rounded-md p-2">
+    <div className="w-full max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col space-y-3">
       <Image
         src={thumbnail}
         alt={title}
-        className="h-52 w-full rounded-md lg:object-cover"
+        className="rounded-md h-52 w-full lg:object-cover"
       />
       <h3 className="text-lg font-semibold">{sliceText(title, 20)}</h3>
       <p className="text-xs text-gray-500 break-words min-h-10">
         {sliceText(description)}
       </p>
-      <div className="flex items-center gap-2 my-2">
-        {colors.length ? (
-          colors?.map((color, index) => {
-            return (
-              <span
-                key={index}
-                className="w-5 h-5 rounded-full cursor-pointer"
-                style={{ backgroundColor: color }}
-              />
-            );
-          })
+      <div className="flex items-center flex-wrap space-x-1">
+        {!colors.length ? (
+          <p className="text-xs text-gray-500">Not available colors!</p>
         ) : (
-          <span className="text-xs text-gray-500">No color selected</span>
+          renderProductColors
         )}
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-indigo-700">${price}</span>
+        <span className="text-indigo-700">${numberWithCommas(price)}</span>
         <Image
           src={category.src}
           alt={category.alt}
-          className="object-bottom object-cover rounded-full h-10 w-10"
+          className="w-10 h-10 rounded-full object-bottom"
         />
       </div>
       <div className="grid grid-cols-2 gap-4 mt-4">

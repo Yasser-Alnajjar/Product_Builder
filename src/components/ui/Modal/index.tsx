@@ -6,14 +6,13 @@ type TProps = {
   setIsOpen: (val: boolean) => void;
   title?: string;
   children: ReactNode;
-  submitButtons: ReactNode;
 };
 
 export default function Modal({
   isOpen,
   setIsOpen,
   title,
-  submitButtons,
+
   children,
 }: TProps) {
   return (
@@ -52,7 +51,6 @@ export default function Modal({
                   </Dialog.Title>
                 )}
                 <div className="mt-2">{children}</div>
-                <div className="mt-4 flex gap-4">{submitButtons}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
