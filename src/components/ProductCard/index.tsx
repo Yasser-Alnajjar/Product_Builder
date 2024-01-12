@@ -1,4 +1,4 @@
-import { TProduct } from "../../types/TProduct";
+import { TProduct } from "../../types";
 import { sliceText } from "../../utils";
 import Image from "../Image";
 import Button from "../ui/Button";
@@ -9,10 +9,10 @@ export default function ProductCard({ product }: TProps) {
   const { title, description, thumbnail, price, colors, category } = product;
 
   return (
-    <div className="max-w-sm mx-auto md:mx-0 border border-slate-200 rounded-md p-2">
+    <div className="mx-auto md:mx-0 border border-slate-200 rounded-md p-2">
       <Image
-        src={thumbnail.src}
-        alt={thumbnail.alt}
+        src={thumbnail}
+        alt={title}
         className="h-52 w-full rounded-md lg:object-cover"
       />
       <h3 className="text-lg font-semibold">{sliceText(title, 20)}</h3>
@@ -42,9 +42,21 @@ export default function ProductCard({ product }: TProps) {
           className="object-bottom object-cover rounded-full h-10 w-10"
         />
       </div>
-      <div className="grid grid-cols-2 gap-2 mt-4">
-        <Button bg="bg-indigo-700">Edit</Button>
-        <Button bg="bg-red-700">Delete</Button>
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <Button
+          bg="bg-indigo-700"
+          outline="outline-indigo-400"
+          className="hover:bg-indigo-900 hover:outline-indigo-900"
+        >
+          Edit
+        </Button>
+        <Button
+          bg="bg-red-700"
+          outline="outline-red-400"
+          className="hover:bg-red-900 hover:outline-red-900"
+        >
+          Delete
+        </Button>
       </div>
     </div>
   );

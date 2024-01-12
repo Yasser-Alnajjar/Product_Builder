@@ -1,7 +1,7 @@
 export type TProduct = {
   id: number;
   title: string;
-  thumbnail: TImage;
+  thumbnail: string;
   description: string;
   price: number;
   key: number;
@@ -14,7 +14,9 @@ type TCategory = {
   src: string;
   alt: string;
 };
-type TImage = {
-  src: string;
-  alt: string;
+export type TProductList = {
+  id: string;
+  name: string;
+  label: string;
+  type: string;
 };

@@ -6,6 +6,7 @@ type TProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "sm" | "md" | "lg";
   color?: string;
   bg?: string;
+  max?: string;
   outline?: string;
 };
 export default function Button({
@@ -15,6 +16,7 @@ export default function Button({
   children,
   outline,
   bg,
+  max,
   ...rest
 }: TProps) {
   const handleSize = () => {
@@ -27,15 +29,9 @@ export default function Button({
     }
   };
 
-  const handleBg = () => {
-    if (bg !== undefined) {
-      return `hover:${bg.split("-").slice(0, 2).join("-")}-900`;
-    }
-  };
-
   return (
     <button
-      className={`w-full px-4 py-2 rounded-lg transition border-white border-2  focus-visible:ring-2 focus-visible:ring-white/75 ${handleSize()} ${color} ${bg} ${handleBg()}  focus:outline focus:outline-offset-2	focus:outline-2 ${outline} ${className} `}
+      className={`w-full px-4 py-2 rounded-lg ease-in duration-100 border-white border-2  focus-visible:ring-2 focus-visible:ring-white/75 focus:outline focus:outline-offset-2	focus:outline-2 ${handleSize()} ${color} ${bg} ${outline} ${max} ${className}`}
       {...rest}
     >
       {children}
