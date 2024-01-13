@@ -13,6 +13,6 @@ export function sliceText(text: string, max: number = 50) {
  * @returns {string} A formatted version of the input numeric string with commas as thousand separators.
  *
  */
-export function numberWithCommas(x: number): string {
+export function numberWithCommas(x: string): string {
   return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

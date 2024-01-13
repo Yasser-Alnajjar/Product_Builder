@@ -19,9 +19,10 @@ type TInputProps = InputHTMLAttributes<HTMLInputElement> & {
   type: string;
   name: string;
 };
-Form.Input = function ({ type, name, id }: TInputProps) {
+Form.Input = function ({ type, name, id, ...rest }: TInputProps) {
   return (
     <input
+      {...rest}
       id={id}
       type={type}
       name={name}
@@ -37,7 +38,11 @@ type TLabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
 };
 Form.Label = function ({ id, children, ...rest }: TLabelProps) {
   return (
-    <label htmlFor={id} className="capitalize" {...rest}>
+    <label
+      htmlFor={id}
+      className="capitalize text-sm font-medium text-gray-700"
+      {...rest}
+    >
       {children}
     </label>
   );

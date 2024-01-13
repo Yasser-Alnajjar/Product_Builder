@@ -1,6 +1,6 @@
-import { TProductList } from "../types";
+import { TFormInput } from "../types";
 
-export const fromProductList: TProductList[] = [
+export const formInputsList: TFormInput[] = [
   {
     id: "title",
     name: "title",

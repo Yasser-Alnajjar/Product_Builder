@@ -9,7 +9,7 @@ type TProps = {
 
 export default function ProductCard({ product }: TProps) {
   const { title, description, thumbnail, price, colors, category } = product;
-  const renderProductColors = colors.map((color) => (
+  const renderProductColors = colors?.map((color) => (
     <CircleColor key={color} color={color} />
   ));
 
@@ -25,7 +25,7 @@ export default function ProductCard({ product }: TProps) {
         {sliceText(description)}
       </p>
       <div className="flex items-center flex-wrap space-x-1">
-        {!colors.length ? (
+        {!colors?.length ? (
           <p className="text-xs text-gray-500">Not available colors!</p>
         ) : (
           renderProductColors
@@ -34,8 +34,8 @@ export default function ProductCard({ product }: TProps) {
       <div className="flex items-center justify-between">
         <span className="text-indigo-700">${numberWithCommas(price)}</span>
         <Image
-          src={category.src}
-          alt={category.alt}
+          src={category?.src}
+          alt={category?.name}
           className="w-10 h-10 rounded-full object-bottom"
         />
       </div>
