@@ -1,7 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, ReactNode } from "react";
-import Button from "../Button";
-
 type TProps = {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
@@ -37,30 +35,14 @@ export default function Modal({ isOpen, setIsOpen, title, children }: TProps) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-auto rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <div className="flex items-center justify-between">
-                  {title && (
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
-                    >
-                      {title}
-                    </Dialog.Title>
-                  )}
-                  {/* <button
-                    onClick={() => setIsOpen(false)}
-                    className="border text-sm font-medium bg-red-700 text-gray-300 hover:bg-red-900 hover:text-gray-100  transition ease-in-out duration-200 h-[25px] w-[25px] rounded-full "
+                {title && (
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    X
-                  </button> */}
-                  <Button
-                    bg="bg-red-500"
-                    outline="outline-red-500"
-                    onClick={() => setIsOpen(false)}
-                    className="w-[25px] h-[25px] px-0 py-0 rounded-xl hover:bg-red-800 hover:outline-red-800"
-                  >
-                    X
-                  </Button>
-                </div>
+                    {title}
+                  </Dialog.Title>
+                )}
                 <div className="mt-2">{children}</div>
               </Dialog.Panel>
             </Transition.Child>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.scss";
 // import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
@@ -7,23 +7,22 @@ import Modal from "./components/ui/Modal";
 import Button from "./components/ui/Button";
 import Form from "./components/ui/Form";
 import { formInputsList } from "./data";
+import { DEFAULT_PRODUCT } from "./constants";
+import { productSchema } from "./validation";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   /* ------ States ------*/
   const [products, setProducts] = useState<TProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [productData, setProductData] = useState<TProduct>({
+  const [errors, setErrors] = useState({
     title: "",
     description: "",
     thumbnail: "",
     price: "",
-    colors: [],
-    category: {
-      name: "",
-      src: "",
-    },
   });
+  const [productData, setProductData] = useState<TProduct>(DEFAULT_PRODUCT);
   /* ------ Request API ------*/
   const fetchProducts = async () => {
     try {
@@ -59,10 +58,26 @@ function App() {
   }, []);
 
   /* ------ Handlers ------*/
+  const onCancel = () => {
+    setIsOpen(false);
+    setProductData(DEFAULT_PRODUCT);
+  };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProductData((prev) => ({ ...prev, [name]: value }));
-    console.log(productData);
+  };
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const errors = productSchema(productData);
+    const hasErrorMessage =
+      Object.values(errors).some((value) => value === "") &&
+      Object.values(errors).every((value) => value === "");
+    if (!hasErrorMessage) {
+      setErrors(errors);
+      return;
+    }
+    // AddNewProduct(productData);
+    console.log("success");
   };
 
   /* ------ Rendering ------*/
@@ -84,17 +99,12 @@ function App() {
         onChange={handleChange}
         value={productData[input.name]}
       />
+      <ErrorMessage message={errors[input.name]} />
     </Form.Group>
   ));
   const renderModal = (
     <Modal title="Create Product" setIsOpen={setIsOpen} isOpen={isOpen}>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log("Form Submitted");
-          AddNewProduct(productData);
-        }}
-      >
+      <Form onSubmit={handleSubmit}>
         {formList}
         <div className="mt-4 flex gap-4">
           <Button
@@ -103,7 +113,7 @@ function App() {
             outline="outline-red-400"
             size="md"
             className="hover:bg-red-900 hover:red-indigo-900"
-            onClick={() => setIsOpen(false)}
+            onClick={onCancel}
           >
             Cancel
           </Button>
