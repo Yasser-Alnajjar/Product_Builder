@@ -5,16 +5,22 @@ import Image from "../Image";
 import Button from "../ui/Button";
 type TProps = {
   product: TProduct;
+  index: number;
   setCurrentProduct: (product: TProduct) => void;
   setModalEdit: (val: boolean) => void;
   setModalDelete: (val: boolean) => void;
+  setIndex: (val: number) => void;
+  setSelectedColors: (colors: string[]) => void;
 };
 
 export default function ProductCard({
   product,
+  index,
   setCurrentProduct,
   setModalEdit,
   setModalDelete,
+  setIndex,
+  setSelectedColors,
 }: TProps) {
   const { title, description, thumbnail, price, colors, category } = product;
   /* ------ Rendering ------*/
@@ -25,6 +31,8 @@ export default function ProductCard({
   /* ------ Handlers ------*/
   const onEdit = () => {
     setCurrentProduct(product);
+    setSelectedColors(product.colors);
+    setIndex(index);
     setModalEdit(true);
   };
   const onDelete = () => {

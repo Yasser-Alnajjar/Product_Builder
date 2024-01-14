@@ -1,25 +1,22 @@
 import styles from "./Navbar.module.scss";
-interface IProps {
-  name: string;
-  path: string;
-}
-export default function Navbar({ name, path }: IProps) {
+
+export default function Navbar() {
   return (
-    <nav className={styles.navbar}>
+    <nav className={`${styles.navbar} bg-indigo-700`}>
       <ul className={styles.navbar_nav_list}>
         <li className={styles.navbar_nav_list_item}>
-          <a className={styles.navbar_nav_list_item_link} href="#">
+          <a className={styles.navbar_nav_list_item_link} href={"/"}>
             Home
           </a>
         </li>
         <li className={styles.navbar_nav_list_item}>
-          <a className={styles.navbar_nav_list_item_link} href="#">
+          <a className={styles.navbar_nav_list_item_link} href={"/"}>
             About
           </a>
         </li>
         <li className={styles.navbar_nav_list_item}>
-          <a className={styles.navbar_nav_list_item_link} href={path}>
-            {name}
+          <a className={styles.navbar_nav_list_item_link} href={"/"}>
+            Login
           </a>
         </li>
       </ul>

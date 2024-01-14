@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 
 export const productsList: TProduct[] = [
   {
-    id: 1,
+    id: uuid(),
     title: "K-SWISS Shoe",
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -13,14 +13,11 @@ export const productsList: TProduct[] = [
     colors: [
       "#A31ACB",
       "#FF6E31",
-      "#3C2A21",
       "#CB1C8D",
       "#645CBB",
       "#FF0032",
       "#820000",
-      "#13005A",
       "#1F8A70",
-      "#84D2C5",
     ],
     category: {
       name: "Shoes",
@@ -29,7 +26,7 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 2,
+    id: uuid(),
     title: "2022 Genesis GV70: Nominee",
     description:
       "As luxury brands go, South Korea’s Genesis is still in its infancy, having sold its first cars (as an independent Hyundai spinoff), the G80 and G90 sedans, for the 2017 model year. Despite its relative youth, Genesis has had a string of successes: We named the automaker’s G70 sports sedan our Best of 2019 award winner, and its GV80 mid-size SUV was a nominee last year for our Best of the Year award. New for 2022, the GV70 compact luxury SUV impresses on a number of fronts. Sleek exterior styling bridges the gap between a traditional SUV and the coupelike SUV look that’s increasingly popular among luxury marques. The cabin is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -44,7 +41,7 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 3,
+    id: uuid(),
     title: "Chevrolet Spark. 995cc Petrol",
     description:
       "As luxury brands go, South Korea’s Genesis is still in its infancy, having sold its first cars (as an independent Hyundai spinoff), the G80 and G90 sedans, for the 2017 model year. Despite its relative youth, Genesis has had a string of successes: We named the automaker’s G70 sports sedan our Best of 2019 award winner, and its GV80 mid-size SUV was a nominee last year for our Best of the Year award. New for 2022, the GV70 compact luxury SUV impresses on a number of fronts. Sleek exterior styling bridges the gap between a traditional SUV and the coupelike SUV look that’s increasingly popular among luxury marques. The cabin is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -59,14 +56,14 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 4,
+    id: uuid(),
     title: "Casual Men Clothes",
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
     thumbnail:
       "https://images.unsplash.com/photo-1524275539700-cf51138f679b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     price: "1500",
-    colors: ["#A31ACB", "#3C2A21", "#1F8A70", "#820000", "#FF0032"],
+    colors: ["#A31ACB", "#1F8A70", "#820000", "#FF0032"],
     category: {
       name: "Clothes",
       image:
@@ -74,7 +71,7 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 5,
+    id: uuid(),
     title: "Converse Shoe",
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -84,14 +81,11 @@ export const productsList: TProduct[] = [
     colors: [
       "#A31ACB",
       "#FF6E31",
-      "#3C2A21",
       "#CB1C8D",
       "#645CBB",
       "#FF0032",
       "#820000",
-      "#13005A",
       "#1F8A70",
-      "#84D2C5",
     ],
     category: {
       name: "Shoes",
@@ -100,7 +94,7 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 6,
+    id: uuid(),
     title: "2022 BMW GV70: Nominee",
     description:
       "As luxury brands go, South Korea’s Genesis is still in its infancy, having sold its first cars (as an independent Hyundai spinoff), the G80 and G90 sedans, for the 2017 model year. Despite its relative youth, Genesis has had a string of successes: We named the automaker’s G70 sports sedan our Best of 2019 award winner, and its GV80 mid-size SUV was a nominee last year for our Best of the Year award. New for 2022, the GV70 compact luxury SUV impresses on a number of fronts. Sleek exterior styling bridges the gap between a traditional SUV and the coupelike SUV look that’s increasingly popular among luxury marques. The cabin is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -115,14 +109,14 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 7,
+    id: uuid(),
     title: "Pc Mi2022 3-3",
     description:
       "As luxury brands go, South Korea’s Genesis is still in its infancy, having sold its first cars (as an independent Hyundai spinoff), the G80 and G90 sedans, for the 2017 model year. Despite its relative youth, Genesis has had a string of successes: We named the automaker’s G70 sports sedan our Best of 2019 award winner, and its GV80 mid-size SUV was a nominee last year for our Best of the Year award. New for 2022, the GV70 compact luxury SUV impresses on a number of fronts. Sleek exterior styling bridges the gap between a traditional SUV and the coupelike SUV look that’s increasingly popular among luxury marques. The cabin is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
     thumbnail:
       "https://images.unsplash.com/photo-1625842268584-8f3296236761?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     price: "120000",
-    colors: ["#A31ACB", "#3C2A21", "#1F8A70", "#820000", "#FF0032"],
+    colors: ["#A31ACB", "#1F8A70", "#820000", "#FF0032"],
     category: {
       name: "PC Desktop",
       image:
@@ -130,7 +124,7 @@ export const productsList: TProduct[] = [
     },
   },
   {
-    id: 8,
+    id: uuid(),
     title: "Pc Mi219 1-3",
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
@@ -176,14 +170,14 @@ export const formInputsList: TFormInput[] = [
 export const COLORS: string[] = [
   "#a855f7",
   "#2563eb",
-  "#84D2C5",
-  "#13005A",
   "#A31ACB",
   "#FF6E31",
-  "#3C2A21",
   "#6C4AB6",
   "#CB1C8D",
   "#000000",
+  "#FF0032",
+  "#820000",
+  "#1F8A70",
   "#645CBB",
 ];
 

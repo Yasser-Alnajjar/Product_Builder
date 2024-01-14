@@ -50,7 +50,7 @@ export const productSchema = (product: TProductSchema) => {
     errors.description = "Product Description is Required";
   } else if (
     product.description.length < 10 ||
-    product.description.length > 80
+    product.description.length > 9999
   ) {
     errors.description =
       "Product description characters must be between 10 to 9999 character.";

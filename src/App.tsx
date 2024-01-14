@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
 import { ChangeEvent, FormEvent, useState } from "react";
-// import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
-import { TCategory, TProduct } from "./types";
+import { TCategory, TProduct, TProductName } from "./types";
 import Modal from "./components/ui/Modal";
 import Button from "./components/ui/Button";
 import Form from "./components/ui/Form";
@@ -13,19 +13,23 @@ import ErrorMessage from "./components/ErrorMessage";
 import CircleColor from "./components/CircleColor";
 import SelectedColor from "./components/SelectedColor";
 import Select from "./components/ui/Select";
+import Footer from "./components/Footer";
 
 function App() {
   /* ------ States ------*/
   const [products, setProducts] = useState<TProduct[]>(productsList);
   const [currentProduct, setCurrentProduct] =
     useState<TProduct>(DEFAULT_PRODUCT);
+  const [productIndex, setProductIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [errors, setErrors] = useState(DEFAULT_ERRORS);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [productData, setProductData] = useState<TProduct>(DEFAULT_PRODUCT);
-  const [selected, setSelected] = useState<TCategory>(CATEGORIES[0]);
+  const [selectedCategory, setSelectedCategory] = useState<TCategory>(
+    CATEGORIES[0]
+  );
 
   /* ------ Handlers ------*/
   const onCancel = () => {
@@ -35,6 +39,8 @@ function App() {
     setIsOpen(false);
   };
   const onEditCancel = () => {
+    setErrors(DEFAULT_ERRORS);
+    setCurrentProduct(DEFAULT_PRODUCT);
     setModalEdit(false);
   };
   const onDeleteCancel = () => {
@@ -66,7 +72,7 @@ function App() {
       {
         ...productData,
         colors: selectedColors,
-        category: selected,
+        category: selectedCategory,
         id: uuid(),
       },
       ...prev,
@@ -75,7 +81,7 @@ function App() {
   };
   const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setProductData((prev) => ({
+    setCurrentProduct((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -83,7 +89,7 @@ function App() {
   };
   const handleEditSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const errors = productSchema(productData);
+    const errors = productSchema(currentProduct);
     const hasErrorMessage =
       Object.values(errors).some((value) => value === "") &&
       Object.values(errors).every((value) => value === "");
@@ -91,30 +97,32 @@ function App() {
       setErrors(errors);
       return;
     }
+    const updatedProducts = [...products];
+    updatedProducts[productIndex] = {
+      ...currentProduct,
+      colors: selectedColors,
+      category: selectedCategory,
+      id: uuid(),
+    };
     // Add new product
-
-    setProducts((prev) => [
-      {
-        ...productData,
-        colors: selectedColors,
-        category: selected,
-        id: uuid(),
-      },
-      ...prev,
-    ]);
-    onCancel();
+    setProducts(updatedProducts);
+    onEditCancel();
   };
 
   /* ------ Rendering ------*/
-  const renderProducts = products.map((product) => (
+  const renderProducts = products.map((product, index) => (
     <ProductCard
       key={product.id}
       product={product}
       setCurrentProduct={setCurrentProduct}
       setModalEdit={setModalEdit}
       setModalDelete={setModalDelete}
+      setIndex={setProductIndex}
+      index={index}
+      setSelectedColors={setSelectedColors}
     />
   ));
+
   const renderColors = COLORS.map(
     (color) =>
       !selectedColors?.includes(color) && (
@@ -128,6 +136,7 @@ function App() {
         />
       )
   );
+
   const renderSelectedColors = selectedColors.map(
     (color) =>
       COLORS.includes(color) && (
@@ -156,11 +165,32 @@ function App() {
       <ErrorMessage message={errors[input.name]} />
     </Form.Group>
   ));
+  const renderEditInputsWithErrorMessage = (
+    id: string,
+    label: string,
+    name: TProductName,
+    type: string
+  ) => {
+    return (
+      <Form.Group key={id}>
+        <Form.Label id={id}>{label}</Form.Label>
+        <Form.Input
+          type={type}
+          name={name}
+          id={id}
+          title={label}
+          onChange={handleEditChange}
+          value={currentProduct[name]}
+        />
+        <ErrorMessage message={errors[name]} />
+      </Form.Group>
+    );
+  };
   const renderModal = (
     <Modal title="Create Product" setIsOpen={setIsOpen} isOpen={isOpen}>
       <Form onSubmit={handleSubmit}>
         {formList}
-        <Select selected={selected} setSelected={setSelected} />
+        <Select selected={selectedCategory} setSelected={setSelectedCategory} />
         {renderSelectedColors.length !== 0 && (
           <div className="flex items-center flex-wrap gap-1 mb-2 mt-4">
             {renderSelectedColors}
@@ -196,20 +226,21 @@ function App() {
   const renderEditModal = (
     <Modal title="Edit Product" isOpen={modalEdit} setIsOpen={setModalEdit}>
       <Form onSubmit={handleEditSubmit}>
-        <Form.Group key={"title"}>
-          <Form.Label id={"title"}>{"title"}</Form.Label>
-          <Form.Input
-            type={"text"}
-            name={"title"}
-            id={"title"}
-            title={"title"}
-            onChange={handleEditChange}
-            value={currentProduct["title"]}
-          />
-          {/* <ErrorMessage message={errors[input.name]} /> */}
-        </Form.Group>
-        <Select selected={selected} setSelected={setSelected} />
-        {renderSelectedColors.length !== 0 && (
+        {formInputsList.map((input) =>
+          renderEditInputsWithErrorMessage(
+            input.id,
+            input.label,
+            input.name,
+            input.type
+          )
+        )}
+        <Select
+          selected={selectedCategory}
+          setSelected={(value) => {
+            setSelectedCategory(value);
+          }}
+        />
+        {selectedColors.length !== 0 && (
           <div className="flex items-center flex-wrap gap-1 mb-2 mt-4">
             {renderSelectedColors}
           </div>
@@ -243,12 +274,12 @@ function App() {
   );
   const renderDeleteModal = (
     <Modal
-      title="Delete Product"
+      title="Are You Sure!"
       isOpen={modalDelete}
       setIsOpen={setModalDelete}
     >
       <div>
-        <h3 className="text-lg font-medium">Are You Sure!</h3>
+        <h3 className="text-lg font-medium"></h3>
         <p className="flex gap-2">
           You want to delete
           <span className="text-red-900">{currentProduct.title}</span> ?
@@ -280,10 +311,10 @@ function App() {
   );
 
   return (
-    <main className="container">
-      {/* <header> */}
-      {/* <Navbar name="login" path="/login" /> build using sass */}
-      {/* </header> */}
+    <section className="container">
+      <header>
+        <Navbar /> {/* build using sass */}
+      </header>
       <main>
         <div className="flex justify-between items-center my-4">
           <h2 className="text-xl lg:text-4xl  font-bold">
@@ -314,7 +345,8 @@ function App() {
         {renderEditModal}
         {renderDeleteModal}
       </main>
-    </main>
+      <Footer />
+    </section>
   );
 }
 

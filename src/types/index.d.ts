@@ -1,27 +1,25 @@
 export type TProduct = {
-  id?: string | number | undefined;
+  id?: string | number;
   title: string;
   thumbnail: string;
   description: string;
   price: string;
   colors: string[];
-  category: TCategory;
+  category: {
+    name: string;
+    image: string;
+  };
 };
-export type TSaveProduct = {
-  title: string;
-  thumbnail: string;
-  description: string;
-  price: string;
-};
+export type TProductName = "title" | "thumbnail" | "description" | "price";
 
 export type TCategory = {
-  id?: string;
+  id: string;
   name: string;
   image: string;
 };
 export type TFormInput = {
   id: string;
-  name: "title" | "thumbnail" | "description" | "price";
+  name: TProductName;
   label: string;
   type: string;
 };
