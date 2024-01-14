@@ -10,7 +10,11 @@ type TProps = {
 export default function Modal({ isOpen, setIsOpen, title, children }: TProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative" onClose={() => setIsOpen(false)}>
+      <Dialog
+        as="div"
+        className="relative overflow-auto"
+        onClose={() => setIsOpen(false)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -34,7 +38,7 @@ export default function Modal({ isOpen, setIsOpen, title, children }: TProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-auto rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 {title && (
                   <Dialog.Title
                     as="h3"

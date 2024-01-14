@@ -21,7 +21,7 @@ export default function Button({
 }: TProps) {
   const handleSize = () => {
     if (size === "sm") {
-      return "text-xs ";
+      return "text-xs";
     } else if (size === "md") {
       return "text-sm";
     } else if (size === "lg") {

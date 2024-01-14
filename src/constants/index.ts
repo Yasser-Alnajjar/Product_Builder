@@ -6,6 +6,12 @@ export const DEFAULT_PRODUCT = {
   colors: [],
   category: {
     name: "",
-    src: "",
+    image: "",
   },
+};
+export const DEFAULT_ERRORS = {
+  title: "",
+  description: "",
+  thumbnail: "",
+  price: "",
 };

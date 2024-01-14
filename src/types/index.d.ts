@@ -1,5 +1,5 @@
 export type TProduct = {
-  id?: string | undefined;
+  id?: string | number | undefined;
   title: string;
   thumbnail: string;
   description: string;
@@ -14,9 +14,10 @@ export type TSaveProduct = {
   price: string;
 };
 
-type TCategory = {
+export type TCategory = {
+  id?: string;
   name: string;
-  src: string;
+  image: string;
 };
 export type TFormInput = {
   id: string;

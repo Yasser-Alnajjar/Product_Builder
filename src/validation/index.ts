@@ -29,28 +29,40 @@ export const productSchema = (product: TProductSchema) => {
   };
 
   // Check all values is not empty
-  Object.entries(product).forEach(([key, value]) => {
-    if (value === "") {
-      return (errors[
-        key as keyof TProductSchema
-      ] = `Product ${key} is required`);
-    }
-  });
+  // Object.entries(product).forEach(([key, value]) => {
+  //   if (!value.trim() || value === "") {
+  //     return (errors[
+  //       key as keyof TProductSchema
+  //     ] = `Product ${key} is required`);
+  //   }
+  // });
 
   // Todo: =>  Title
-  if (product.title.length < 5 || product.title.length > 80) {
+  if (!product.title.trim() || product.title === "") {
+    errors.title = "Product Title is Required";
+  } else if (product.title.length < 5 || product.title.length > 80) {
     errors.title =
       "Product Title characters must be between 5 to 80 character.";
   }
 
   // Todo: =>  Description
-  if (product.description.length < 10 || product.description.length > 80) {
+  if (!product.description.trim() || product.description === "") {
+    errors.description = "Product Description is Required";
+  } else if (
+    product.description.length < 10 ||
+    product.description.length > 80
+  ) {
     errors.description =
       "Product description characters must be between 10 to 9999 character.";
   }
 
   // Todo: =>  Thumbnail
-  if (!/^(ftp|http:https):\/\/[^ "]+$/.test(product.thumbnail)) {
+  if (!product.thumbnail.trim() || product.thumbnail === "") {
+    errors.thumbnail = "Product Thumbnail is Required";
+  } else if (
+    !product.thumbnail.startsWith("http") ||
+    !product.thumbnail.startsWith("https")
+  ) {
     errors.thumbnail = "Invalid thumbnail url";
   }
 
