@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { ChangeEvent, FormEvent, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import { TCategory, TProduct, TProductName } from "./types";
@@ -23,6 +24,7 @@ function App() {
   const [productIndex, setProductIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [errors, setErrors] = useState(DEFAULT_ERRORS);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -49,7 +51,9 @@ function App() {
   const deleteConfirmation = () => {
     setProducts((prev) => prev.filter((item) => item.id !== currentProduct.id));
     setModalDelete(false);
+    toast.success(`${currentProduct.title} Deleted !`);
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProductData((prev) => ({
@@ -77,6 +81,7 @@ function App() {
       },
       ...prev,
     ]);
+    toast.success(`${productData.title} Added 😊`);
     onCancel();
   };
   const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +111,7 @@ function App() {
     };
     // Add new product
     setProducts(updatedProducts);
+    toast.success(`${currentProduct.title} Updated !`);
     onEditCancel();
   };
 
@@ -122,7 +128,6 @@ function App() {
       setSelectedColors={setSelectedColors}
     />
   ));
-
   const renderColors = COLORS.map(
     (color) =>
       !selectedColors?.includes(color) && (
@@ -136,7 +141,6 @@ function App() {
         />
       )
   );
-
   const renderSelectedColors = selectedColors.map(
     (color) =>
       COLORS.includes(color) && (
@@ -312,6 +316,7 @@ function App() {
 
   return (
     <section className="container">
+      <Toaster position="top-center" reverseOrder={false} gutter={8} />
       <header>
         <Navbar /> {/* build using sass */}
       </header>
