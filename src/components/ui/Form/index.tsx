@@ -3,6 +3,7 @@ import {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
+  memo,
 } from "react";
 
 /* ------- From ------- */
@@ -19,7 +20,7 @@ type TInputProps = InputHTMLAttributes<HTMLInputElement> & {
   type: string;
   name: string;
 };
-Form.Input = function ({ type, name, id, ...rest }: TInputProps) {
+Form.Input = memo(function ({ type, name, id, ...rest }: TInputProps) {
   return (
     <input
       {...rest}
@@ -29,14 +30,14 @@ Form.Input = function ({ type, name, id, ...rest }: TInputProps) {
       className="border w-full rounded-md p-2 text-black outline-indigo-700 shadow-md"
     />
   );
-};
+});
 
 /* ------- Label ------- */
 type TLabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
   id: string;
   children: ReactNode;
 };
-Form.Label = function ({ id, children, ...rest }: TLabelProps) {
+Form.Label = memo(function ({ id, children, ...rest }: TLabelProps) {
   return (
     <label
       htmlFor={id}
@@ -46,11 +47,11 @@ Form.Label = function ({ id, children, ...rest }: TLabelProps) {
       {children}
     </label>
   );
-};
+});
 
 /* ------- Group ------- */
 
-Form.Group = function ({
+Form.Group = memo(function ({
   className = "mb-2",
   children,
   ...rest
@@ -63,4 +64,4 @@ Form.Group = function ({
       {children}
     </div>
   );
-};
+});

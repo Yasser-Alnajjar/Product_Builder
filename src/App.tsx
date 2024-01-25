@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
@@ -34,25 +34,25 @@ function App() {
   );
 
   /* ------ Handlers ------*/
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setErrors(DEFAULT_ERRORS);
     setProductData(DEFAULT_PRODUCT);
     setSelectedColors([]);
     setIsOpen(false);
-  };
-  const onEditCancel = () => {
+  }, []);
+  const onEditCancel = useCallback(() => {
     setErrors(DEFAULT_ERRORS);
     setCurrentProduct(DEFAULT_PRODUCT);
     setModalEdit(false);
-  };
-  const onDeleteCancel = () => {
+  }, []);
+  const onDeleteCancel = useCallback(() => {
     setModalDelete(false);
-  };
-  const deleteConfirmation = () => {
+  }, []);
+  const deleteConfirmation = useCallback(() => {
     setProducts((prev) => prev.filter((item) => item.id !== currentProduct.id));
     setModalDelete(false);
     toast.success(`${currentProduct.title} Deleted !`);
-  };
+  }, [currentProduct.id, currentProduct.title]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

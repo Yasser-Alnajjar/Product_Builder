@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { IoMdCheckmark } from "react-icons/io";
 import { Fragment } from "react";
@@ -13,7 +14,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Select({ selected, setSelected }: TProps) {
+export default memo(function Select({ selected, setSelected }: TProps) {
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
@@ -100,4 +101,4 @@ export default function Select({ selected, setSelected }: TProps) {
       )}
     </Listbox>
   );
-}
+});

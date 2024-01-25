@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { TProduct } from "../../types";
 import { numberWithCommas, sliceText } from "../../utils";
 import CircleColor from "../CircleColor";
@@ -13,7 +14,7 @@ type TProps = {
   setSelectedColors: (colors: string[]) => void;
 };
 
-export default function ProductCard({
+export default memo(function ProductCard({
   product,
   index,
   setCurrentProduct,
@@ -59,11 +60,14 @@ export default function ProductCard({
       </div>
       <div className="flex items-center justify-between">
         <span className="text-indigo-700">${numberWithCommas(price)}</span>
-        <Image
-          src={category?.image}
-          alt={category?.name}
-          className="w-10 h-10 rounded-full object-bottom"
-        />
+        <div className="flex items-center gap-2">
+          <span className="text-sm">{category?.name}</span>
+          <Image
+            src={category?.image}
+            alt={category?.name}
+            className="w-10 h-10 rounded-full object-bottom"
+          />
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mt-4">
         <Button
@@ -85,4 +89,4 @@ export default function ProductCard({
       </div>
     </div>
   );
-}
+});
